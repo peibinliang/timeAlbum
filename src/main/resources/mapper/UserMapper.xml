@@ -3,6 +3,16 @@
 <mapper namespace="com.time.album.timealbum.mapper.UserMapper">
 
     <select id="getUserByUserId" resultType="com.time.album.timealbum.entity.User">
-        select * from tb_user where user_id = #{userId}
+        select *
+        from tb_user
+        where user_id = #{userId}
+    </select>
+
+    <select id="getUserByAccount" resultType="com.time.album.timealbum.dto.resp.UserRespDto">
+        select *
+        from tb_user
+        where user_name like #{account}
+           or phone like #{account}
+           or email like #{account}
     </select>
 </mapper>
