@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.time.album.timealbum.mapper.VideoMapper">
+    <insert id="saveVideoRelation">
+        insert
+        tb_video_relation (album_id,video_id) values (
+        #{albumId},
+        #{videoId}
+        )
+    </insert>
+
+    <update id="removeVideo">
+        update tb_video
+        set is_deleted = 1
+        where video_id = #{videoId}
+    </update>
+
+    <select id="listVideoByUserId" resultType="com.time.album.timealbum.dto.resp.VideoRespDto">
+        select a.*
+        from tb_video a
+                 inner join tb_video_relation b
+                            on a.video_id = b.video_id
+                 inner join tb_album c
+                            on b.album_id = c.album_id
+                 inner join tb_user_relation d
+                            on c.album_id = d.album_id
+                 inner join tb_user e
+                            on d.user_id = e.user_id
+        where e.user_id = #{userId}
+    </select>
+
+    <select id="listVideoByAlbumId" resultType="com.time.album.timealbum.dto.resp.VideoRespDto">
+        select a.*
+        from tb_video a
+                 inner join tb_video_relation b
+                            on a.video_id = b.video_id
+                 inner join tb_album c
+                            on b.album_id = c.album_id
+        where c.album_id = #{albumId}
+    </select>
+</mapper>

@@ -17,7 +17,8 @@ public enum UserStateCode {
     BU10004("手机号错误"),
     BU10005("手机号格式错误"),
     BU10006("密码错误"),
-    BU10007("这已经是最后一页了")
+    BU10007("这已经是最后一页了"),
+    BU10008("手机号已注册")
     ;
 
     private final String msg;

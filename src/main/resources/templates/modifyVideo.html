@@ -1,0 +1,92 @@
+<html xml:xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>编辑视频</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header>时光相册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li class="active">我的空间</li>
+      <li><a th:href="${'/album/albumList?userId='+session.user.getUserId()}">我的相册</a></li>
+      <li>我的视频</li>
+      <li>空间成员</li>
+      <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
+    </ul>
+  </nav>
+  <article>
+    <h5>编辑视频</h5>
+    <table>
+      <tr>
+        <td>视频</td>
+        <td>
+          <img id="image" th:src="${video.getVideoUrl()}"  style="width: 320px; height: 180px;display: block;"/>
+        </td>
+      </tr>
+      <tr>
+        <td>视频编码</td>
+        <td th:text="${video.getVideoNo()}"></td>
+      </tr>
+      <tr>
+        <td>标签</td>
+        <td>
+          <select>
+            <option value="0" name="label" disabled>--请选择--</option>
+            <option value="1" name="label" th:selected="${video.getVideoLabel() == 1}">回忆</option>
+            <option value="2" name="label" th:selected="${video.getVideoLabel() == 2}">游玩</option>
+            <option value="3" name="label" th:selected="${video.getVideoLabel() == 3}">闺蜜</option>
+            <option value="4" name="label" th:selected="${video.getVideoLabel() == 4}">风景</option>
+            <option value="5" name="label" th:selected="${video.getVideoLabel() == 5}">美食</option>
+            <option value="6" name="label" th:selected="${video.getVideoLabel() == 6}">学生时代</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>备注</td>
+        <td>
+          <textarea maxlength="128" th:value="${video.getNote()}" name="note">
+          </textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>创建时间</td>
+        <td th:text="${video.getGmtCreate()}"></td>
+      </tr>
+      <tr>
+        <td>最后修改时间</td>
+        <td th:text="${video.getGmtModify()}"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="modify()">修改</button>&emsp;&emsp;
+          <button onclick="javascript:window.location = document.referrer;">返回</button>
+        </td>
+      </tr>
+    </table>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline>
+  function modify(){
+    let param = {
+      'videoLabel':$('[name=label]:selected').val(),
+      'note':$('[name=note]').val(),
+      'videoId':[[${video.videoId}]]
+    }
+
+    $.post("http://localhost:8088/video/modifyvideoDo",param,function (resp){
+      if (resp.code === "SUCCESS"){
+        alert("修改成功");
+        window.location = document.referrer;
+        return;
+      }else {
+        alert("修改失败！请稍后再试！")
+      }
+    })
+  }
+</script>
+</html>

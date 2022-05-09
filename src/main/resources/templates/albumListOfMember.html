@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  xml:xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>相册列表</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header>时光相册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li>我的空间</li>
+      <li>我的相册</li>
+      <li>我的视频</li>
+      <li class="active">空间成员</li>
+      <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
+    </ul>
+  </nav>
+  <article>
+    <h5>相册列表</h5>
+    <div th:each="item : ${albumList}" style="display: inline-block;">
+      <div style="width: 200px;height: 160px;border:1px solid #778899;display: inline-block;margin: 5px 0;" th:onclick="member([[${item.albumId}]]);">
+        <img src="../img/album.png" style="width: 200px;">
+        <p style="font-size: 16px;line-height: 25px;margin: 0 auto;" th:text="${item.albumName}"></p>
+        <p style="font-size: 12px;line-height: 16px;color: grey;text-align: left;">备注：<span th:text="${item.note}"></span></p>
+      </div>
+    </div>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script>
+  function member(albumId){
+    window.location.href = "http://localhost:8088/album/albumMember?albumId="+albumId;
+    return;
+  }
+</script>
+</html>

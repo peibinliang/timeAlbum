@@ -15,4 +15,16 @@
            or phone like #{account}
            or email like #{account}
     </select>
+
+    <select id="getUserByUserName" resultType="com.time.album.timealbum.dto.resp.UserRespDto">
+        select *
+        from tb_user
+        where user_name like #{userName}
+    </select>
+
+    <select id="getUserByPhone" resultType="com.time.album.timealbum.dto.resp.UserRespDto">
+        select *
+        from tb_user
+        where phone like #{phone}
+    </select>
 </mapper>

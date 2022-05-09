@@ -1,0 +1,74 @@
+<html>
+<head xml:xmlns:th="http://www.thymeleaf.org">
+  <meta charset="UTF-8">
+  <title>相册成员</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    table{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+    td{
+      height: 40px;
+      font-size: 18px;
+      width: 50%;
+    }
+    .left{
+      text-align: left;
+    }
+    .right{
+      text-align: right;
+      padding-right: 10px;
+    }
+  </style>
+</head>
+<body>
+<header>时&emsp;光&emsp;相&emsp;册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li>我的空间</li>
+      <li>我的相册</li>
+      <li>我的视频</li>
+      <li class="active">空间成员</li>
+      <li>我的信息</li>
+    </ul>
+  </nav>
+  <article>
+    <h3>相册成员</h3>
+    <div style="display: inline-block" th:each="item : ${userList}">
+      <div style="display: inline-block;width: 80px;height: 110px;border: 1px solid black;">
+        <img src="../img/headIco.png" width="80" height="80">
+        <span th:text="${item.realName}" style="line-height: 30px;text-align: center;font-size: 16px"></span>&ensp;
+        <input type="checkbox" th:value="${item.userId}" name="userId">
+      </div>
+    </div>
+    <br>
+    <button onclick="addMember()">新增成员</button>
+    <button onclick="removeMember()">移除成员</button>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline="javascript">
+  function addMember(){
+    window.location.href = "http://localhost:8088/album/addMember?albumId="+[[${albumId}]]
+  }
+
+  function removeMember(){
+    let param = {
+      'userIdList':[],
+      'albumId':[[${albumId}]]
+    }
+    let userIds = document.getElementsByName("userId");
+    for(let userId in userIds){
+      if (userId.checked){
+        param.userIdList.push(userId.val());
+      }
+    }
+    $.post("http://localhost:8088")
+  }
+</script>
+</html>

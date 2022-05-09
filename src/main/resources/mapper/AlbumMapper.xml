@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.time.album.timealbum.mapper.AlbumMapper">
+
+    <select id="lsitAlbum" resultType="com.time.album.timealbum.dto.resp.AlbumRespDto">
+        select a.*
+        from tb_album a
+                 inner join tb_user_relation b
+                            on a.album_id = b.album_id
+        where b.user_id = #{userId}
+    </select>
+
+    <select id="listUserByAlbumId" resultType="com.time.album.timealbum.dto.resp.UserRespDto">
+        select b.*
+        from tb_user_relation a
+                 inner join tb_user b on a.user_id = b.user_id
+        where a.album_id = #{albumId}
+    </select>
+</mapper>

@@ -1,0 +1,136 @@
+<html>
+<head xml:xmlns:th="http://www.thymeleaf.org">
+  <meta charset="UTF-8">
+  <title>修改个人信息</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    table{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+    td{
+      height: 40px;
+      font-size: 18px;
+      width: 50%;
+    }
+    .left{
+      text-align: left;
+    }
+    .right{
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    .btn{
+      width: 60px;
+    }
+  </style>
+</head>
+<body>
+<header>时&emsp;光&emsp;相&emsp;册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li>我的空间</li>
+      <li>我的相册</li>
+      <li>我的视频</li>
+      <li>空间成员</li>
+      <li class="active">我的信息</li>
+    </ul>
+  </nav>
+  <article>
+    <table>
+      <tr>
+        <td colspan="2">
+          <h3>个人信息</h3>
+        </td>
+      </tr>
+      <tr>
+        <td class="right">用&ensp;户&ensp;名</td>
+        <td class="left">
+          <input type="text" th:value="${userInfo.userName}" name="userName">
+        </td>
+      </tr>
+      <tr>
+        <td class="right">手机号码</td>
+        <td class="left">
+          <input type="text" th:value="${userInfo.phone}" name="phone">
+        </td>
+      </tr>
+      <tr>
+        <td class="right">邮&emsp;&emsp;箱</td>
+        <td class="left">
+          <input type="text" th:value="${userInfo.email}" name="email">
+        </td>
+      </tr>
+      <tr>
+        <td class="right">真实姓名</td>
+        <td class="left">
+          <input type="text" th:value="${userInfo.realName}" name="realName">
+        </td>
+      </tr>
+      <tr>
+        <td class="right">用户角色</td>
+        <td th:switch="${userInfo.role}" class="left">
+          <span th:case="1">系统管理员</span>
+          <span th:case="2">相册管理员</span>
+          <span th:case="3">普通用户</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="right">注册时间</td>
+        <td th:text="${userInfo.gmtCreate}" class="left"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          &emsp;&emsp;<input type="button" value="确认修改" onclick="modify()" class="btn">&emsp;&emsp;
+          <input type="button" value="返回" onclick="javascript:window.location=document.referrer" class="btn">
+        </td>
+      </tr>
+    </table>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline="javascript">
+  function modify(){
+    let param = {
+      'userId':[[${userInfo.userId}]],
+      'userName':$('[name=userName]').val(),
+      'phone':$('[name=phone]').val(),
+      'email':$('[name=email]').val(),
+      'realName':$('[name=realName]').val()
+    }
+
+    if (param.userName !== ""){
+      param.userName = param.userName.trim()
+    }
+
+    if (param.phone !== ""){
+      param.phone = param.phone.trim()
+    }
+
+    if (param.email !== ""){
+      param.email = param.email.trim()
+    }
+
+    if (param.realName !== ""){
+      param.realName = param.realName.trim()
+    }
+
+    console.log(param)
+
+    $.post("http://localhost:8088/user/modifyUserDo",param,function (resp){
+      if (resp.code === "SUCCESS"){
+        alert("修改成功");
+        window.location = document.referrer;
+        return;
+      }else {
+        alert(resp.message);
+      }
+    })
+  }
+</script>
+</html>

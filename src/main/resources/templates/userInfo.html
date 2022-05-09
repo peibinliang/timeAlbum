@@ -1,0 +1,89 @@
+<html>
+<head xml:xmlns:th="http://www.thymeleaf.org">
+  <meta charset="UTF-8">
+  <title>个人信息</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    table{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+    td{
+      height: 40px;
+      font-size: 18px;
+      width: 50%;
+    }
+    .left{
+      text-align: left;
+    }
+    .right{
+      text-align: right;
+      padding-right: 10px;
+    }
+  </style>
+</head>
+<body>
+<header>时&emsp;光&emsp;相&emsp;册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li>我的空间</li>
+      <li>我的相册</li>
+      <li>我的视频</li>
+      <li>空间成员</li>
+      <li class="active">我的信息</li>
+    </ul>
+  </nav>
+  <article>
+    <table>
+      <tr>
+        <td colspan="2">
+          <h3>个人信息</h3>
+        </td>
+      </tr>
+      <tr>
+        <td class="right">用&ensp;户&ensp;名</td>
+        <td th:text="${userInfo.userName}" class="left"></td>
+      </tr>
+      <tr>
+        <td class="right">手机号码</td>
+        <td th:text="${userInfo.phone}" class="left"></td>
+      </tr>
+      <tr>
+        <td class="right">邮&emsp;&emsp;箱</td>
+        <td th:text="${userInfo.email}" class="left"></td>
+      </tr>
+      <tr>
+        <td class="right">真实姓名</td>
+        <td th:text="${userInfo.realName}" class="left"></td>
+      </tr>
+      <tr>
+        <td class="right">用户角色</td>
+        <td th:switch="${userInfo.role}" class="left">
+          <span th:case="1">系统管理员</span>
+          <span th:case="2">相册管理员</span>
+          <span th:case="3">普通用户</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="right">注册时间</td>
+        <td th:text="${userInfo.gmtCreate}" class="left"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="button" value="修改个人信息" onclick="modify()">
+        </td>
+      </tr>
+    </table>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline="javascript">
+  function modify(){
+    window.location.href='http://localhost:8088/user/modifyUser?userId='+[[${userInfo.userId}]];
+  }
+</script>
+</html>

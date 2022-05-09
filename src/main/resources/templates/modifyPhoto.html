@@ -1,0 +1,92 @@
+<html xml:xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>编辑照片</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header>时光相册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li class="active">我的空间</li>
+      <li><a th:href="${'/album/albumList?userId='+session.user.getUserId()}">我的相册</a></li>
+      <li>我的视频</li>
+      <li>空间成员</li>
+      <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
+    </ul>
+  </nav>
+  <article>
+    <h5>新增照片</h5>
+    <table>
+      <tr>
+        <td>照片</td>
+        <td>
+          <img id="image" th:src="${photo.getPhotoUrl()}"  style="width: 320px; height: 180px;display: block;"/>
+        </td>
+      </tr>
+      <tr>
+        <td>照片编码</td>
+        <td th:text="${photo.getPhotoNo()}"></td>
+      </tr>
+      <tr>
+        <td>标签</td>
+        <td>
+          <select>
+            <option value="0" name="label" disabled>--请选择--</option>
+            <option value="1" name="label" th:selected="${photo.getPhotoLabel() == 1}">回忆</option>
+            <option value="2" name="label" th:selected="${photo.getPhotoLabel() == 2}">游玩</option>
+            <option value="3" name="label" th:selected="${photo.getPhotoLabel() == 3}">闺蜜</option>
+            <option value="4" name="label" th:selected="${photo.getPhotoLabel() == 4}">风景</option>
+            <option value="5" name="label" th:selected="${photo.getPhotoLabel() == 5}">美食</option>
+            <option value="6" name="label" th:selected="${photo.getPhotoLabel() == 6}">学生时代</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>备注</td>
+        <td>
+          <textarea maxlength="128" th:value="${photo.getNote()}" name="note">
+          </textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>创建时间</td>
+        <td th:text="${photo.getGmtCreate()}"></td>
+      </tr>
+      <tr>
+        <td>最后修改时间</td>
+        <td th:text="${photo.getGmtModify()}"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="modify()">修改</button>&emsp;&emsp;
+          <button onclick="javascript:window.location = document.referrer;">返回</button>
+        </td>
+      </tr>
+    </table>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline>
+  function modify(){
+    let param = {
+      'photoLabel':$('[name=label]:selected').val(),
+      'note':$('[name=note]').val(),
+      'photoId':[[${photo.photoId}]]
+    }
+
+    $.post("http://localhost:8088/photo/modifyPhotoDo",param,function (resp){
+      if (resp.code === "SUCCESS"){
+        alert("修改成功");
+        window.location = document.referrer;
+        return;
+      }else {
+        alert("修改失败！请稍后再试！")
+      }
+    })
+  }
+</script>
+</html>
