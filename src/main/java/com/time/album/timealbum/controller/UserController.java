@@ -142,4 +142,11 @@ public class UserController extends BaseController{
         boolean result = userService.modifyUser(userReqDto);
         return ApiResponse.success(result);
     }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        ModelAndView view = new ModelAndView("/index");
+        return view;
+    }
 }

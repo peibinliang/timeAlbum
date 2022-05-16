@@ -30,6 +30,7 @@
       <li><a th:href="${'/video/videoList?userId='+session.user.getUserId()}">我的视频</a></li>
       <li class="active">空间成员</li>
       <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
+      <li><a href="/user/logout">退出登录</a></li>
     </ul>
   </nav>
   <article>
