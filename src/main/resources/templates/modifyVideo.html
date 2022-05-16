@@ -12,8 +12,8 @@
     <ul>
       <li class="active">我的空间</li>
       <li><a th:href="${'/album/albumList?userId='+session.user.getUserId()}">我的相册</a></li>
-      <li>我的视频</li>
-      <li>空间成员</li>
+      <li><a th:href="${'/video/videoList?userId='+session.user.getUserId()}">我的视频</a></li>
+      <li><a th:href="${'/album/albumListOfMember?userId='+session.user.getUserId()}">空间成员</a></li>
       <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
     </ul>
   </nav>

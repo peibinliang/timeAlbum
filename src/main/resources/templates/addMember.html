@@ -25,11 +25,11 @@
 <section class="flexModal fixedLeft">
   <nav>
     <ul>
-      <li>我的空间</li>
-      <li>我的相册</li>
-      <li>我的视频</li>
+      <li><a href="/user/main">我的空间</a></li>
+      <li><a th:href="${'/user/main?userId='+session.user.getUserId()}">我的相册</a></li>
+      <li><a th:href="${'/video/videoList?userId='+session.user.getUserId()}">我的视频</a></li>
       <li class="active">空间成员</li>
-      <li>我的信息</li>
+      <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
     </ul>
   </nav>
   <article>

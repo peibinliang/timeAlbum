@@ -48,4 +48,11 @@ public interface PhotoService {
      * @return
      */
     List<PhotoRespDto> searchPhotoListByUserId(Integer userId, String search);
+
+    /**
+     * 编辑照片信息
+     * @param photoReqDto
+     * @return
+     */
+    boolean modifyPhoto(PhotoReqDto photoReqDto);
 }

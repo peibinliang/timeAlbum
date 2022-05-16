@@ -50,7 +50,7 @@ public class PhotoController {
 
     @PostMapping("/modifyPhotoDo")
     public ApiResponse modifyPhotoDo(PhotoReqDto photoReqDto){
-        // TODO: 2022/5/12
+        photoService.modifyPhoto(photoReqDto);
         return ApiResponse.success();
     }
 

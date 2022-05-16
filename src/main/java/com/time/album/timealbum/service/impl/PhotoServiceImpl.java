@@ -97,4 +97,15 @@ public class PhotoServiceImpl implements PhotoService {
         }
         return photoMapper.searchPhotoListByUserId(userId,search);
     }
+
+    /**
+     * 编辑照片信息
+     *
+     * @param photoReqDto
+     * @return
+     */
+    @Override
+    public boolean modifyPhoto(PhotoReqDto photoReqDto) {
+        return photoMapper.updateById(BeanUtil.toBean(photoReqDto,Photo.class))>0;
+    }
 }

@@ -51,7 +51,7 @@
                             on d.user_id = e.user_id
         where e.user_id = #{userId}
           and (a.photo_label = cast(#{search} as signed)
-          or a.note like concat('%',#{search}))
+          or a.note like concat(concat('%',#{search}),'%'))
           and a.is_deleted = 0
     </select>
 </mapper>
