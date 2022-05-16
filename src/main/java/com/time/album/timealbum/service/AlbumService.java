@@ -19,4 +19,19 @@ public interface AlbumService {
      * @return
      */
     List<UserRespDto> listUserByAlbumId(Integer albumId);
+
+    /**
+     * 获取相册对象
+     * @param albumId
+     * @return
+     */
+    AlbumRespDto getAlbumByAlbumId(Integer albumId);
+
+    /**
+     * 移除相册成员
+     * @param albumId
+     * @param userIdList
+     * @return
+     */
+    boolean removeMember(Integer albumId, List<Integer> userIdList);
 }

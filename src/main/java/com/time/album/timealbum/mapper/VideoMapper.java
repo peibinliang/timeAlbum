@@ -36,4 +36,12 @@ public interface VideoMapper extends BaseMapper<Video> {
      * @return
      */
     Integer removeVideo(@Param("videoId") Integer videoId);
+
+    /**
+     * 视频搜索
+     * @param userId
+     * @param search
+     * @return
+     */
+    List<VideoRespDto> searchVideoListByUserId(Integer userId, String search);
 }

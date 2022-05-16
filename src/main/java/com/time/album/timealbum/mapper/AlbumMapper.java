@@ -22,4 +22,13 @@ public interface AlbumMapper extends BaseMapper<Album> {
      * @return
      */
     List<UserRespDto> listUserByAlbumId(@Param("albumId") Integer albumId);
+
+    /**
+     * 移除相册成员
+     * @param albumId
+     * @param userIdList
+     * @return
+     */
+    Integer removeMember(@Param("albumId") Integer albumId, @Param("userIdList") List<Integer> userIdList);
+
 }

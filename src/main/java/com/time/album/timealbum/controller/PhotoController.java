@@ -30,8 +30,8 @@ public class PhotoController {
         return ApiResponse.success(result);
     }
 
-    @GetMapping("/PhotoInfo")
-    public ModelAndView PhotoInfo(Integer photoId){
+    @GetMapping("/photoInfo")
+    public ModelAndView photoInfo(Integer photoId){
         ModelAndView view = new ModelAndView("/photoInfo");
         PhotoRespDto photo = photoService.getPhotoByPhotoId(photoId);
         photo.setLabelName(LabelEnum.getTypeNameByTypeId(photo.getPhotoLabel()));
@@ -46,6 +46,12 @@ public class PhotoController {
         photo.setLabelName(LabelEnum.getTypeNameByTypeId(photo.getPhotoLabel()));
         view.addObject("photo",photo);
         return view;
+    }
+
+    @PostMapping("/modifyPhotoDo")
+    public ApiResponse modifyPhotoDo(PhotoReqDto photoReqDto){
+        // TODO: 2022/5/12
+        return ApiResponse.success();
     }
 
     @PostMapping("/removePhoto")

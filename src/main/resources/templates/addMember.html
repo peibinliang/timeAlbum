@@ -1,0 +1,143 @@
+<html>
+<head xml:xmlns:th="http://www.thymeleaf.org">
+  <meta charset="UTF-8">
+  <title>新增相册成员</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    table{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+    td{
+      height: 40px;
+      font-size: 18px;
+      width: 50%;
+    }
+    .msg{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<header>时&emsp;光&emsp;相&emsp;册</header>
+<section class="flexModal fixedLeft">
+  <nav>
+    <ul>
+      <li>我的空间</li>
+      <li>我的相册</li>
+      <li>我的视频</li>
+      <li class="active">空间成员</li>
+      <li>我的信息</li>
+    </ul>
+  </nav>
+  <article>
+    <h3>新增相册成员</h3>
+    <table>
+      <tr>
+        <td>用户名</td>
+        <td>
+          <input name="userName" type="text" placeholder="请填写用户名">&emsp;
+          <span class="msg">*</span>
+        </td>
+      </tr>
+      <tr>
+        <td>手机号码</td>
+        <td>
+          <input name="phone" type="text" placeholder="请填写手机号码">&emsp;
+          <span class="msg">*</span>
+        </td>
+      </tr>
+      <tr>
+        <td>邮箱</td>
+        <td>
+          <input name="email" type="text" placeholder="请填写邮箱">&emsp;
+          <span class="msg">*</span>
+        </td>
+      </tr>
+      <tr>
+        <td>真实姓名</td>
+        <td>
+          <input name="realName" type="text" placeholder="请填写真实姓名">&emsp;
+          <span class="msg">*</span>
+        </td>
+      </tr>
+      <tr>
+        <td>密码</td>
+        <td>
+          <input type="password" name="password" placeholder="请输入密码">&emsp;
+          <span class="msg">*</span>
+        </td>
+      </tr>
+      <tr>
+        <td>确认密码</td>
+        <td>
+          <input type="password" name="password2" placeholder="请再一次输入密码">&emsp;
+          <span class="msg">*</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="addMember()">添加</button>
+        </td>
+      </tr>
+    </table>
+  </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline="javascript">
+  function addMember(){
+    let param = {
+      'userName':$('[name=userName]').val(),
+      'phone':$('[name=phone]').val(),
+      'email':$('[name=email]').val(),
+      'realName':$('[name=realName]').val(),
+      'password':$('[name=password]').val(),
+      'password2':$('[name=password2]').val(),
+      'albumId':[[${albumId}]],
+      'role':3
+    }
+
+    if (param.userName == null || param.userName === ""){
+      alert("用户名不能为空");
+      return;
+    }
+
+    if (param.phone == null || param.phone === ""){
+      alert("手机号码不能为空");
+      return;
+    }
+
+    if (param.email == null || param.email === ""){
+      alert("邮箱不能为空");
+      return;
+    }
+
+    if (param.realName == null || param.realName === ""){
+      alert("真实姓名不能为空");
+      return;
+    }
+
+    if (param.password == null || param.password === "" || param.password2 == null || param.password2 === ""){
+      alert("密码不能为空");
+    }else if (param.password !== param.password2){
+      alert("两次输入的密码不相同");
+      return;
+    }
+
+    $.post("http://localhost:8088/album/addMemberDo",param,function (resp){
+      if (resp.code === "SUCCESS"){
+        alert("新增相册成员成功");
+        window.location = document.referrer;
+        return;
+      }else {
+        alert("添加失败，请稍后再试")
+      }
+    })
+
+
+  }
+</script>
+</html>

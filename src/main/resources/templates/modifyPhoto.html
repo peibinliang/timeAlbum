@@ -47,8 +47,7 @@
       <tr>
         <td>备注</td>
         <td>
-          <textarea maxlength="128" th:value="${photo.getNote()}" name="note">
-          </textarea>
+          <input type="text" th:value="${photo.getNote()}" name="note">
         </td>
       </tr>
       <tr>
@@ -70,7 +69,7 @@
 </section>
 <footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
 </body>
-<script th:inline>
+<script th:inline="javascript">
   function modify(){
     let param = {
       'photoLabel':$('[name=label]:selected').val(),

@@ -4,6 +4,7 @@ import com.time.album.timealbum.dto.req.UserReqDto;
 import com.time.album.timealbum.dto.resp.PhotoRespDto;
 import com.time.album.timealbum.dto.resp.UserRespDto;
 import com.time.album.timealbum.dto.resp.VideoRespDto;
+import com.time.album.timealbum.enums.LabelEnum;
 import com.time.album.timealbum.exception.BusinessException;
 import com.time.album.timealbum.model.ApiResponse;
 import com.time.album.timealbum.service.PhotoService;
@@ -55,10 +56,35 @@ public class UserController extends BaseController{
     public ModelAndView main(HttpServletRequest request){
         UserRespDto user = (UserRespDto) request.getSession().getAttribute("user");
         List<PhotoRespDto> photoList = photoService.listPhotoByUserId(user.getUserId());
+        for (PhotoRespDto photo : photoList){
+            photo.setLabelName(LabelEnum.getTypeNameByTypeId(photo.getPhotoLabel()));
+        }
         List<VideoRespDto> videoList = videoService.listVideoByUserId(user.getUserId());
+        for (VideoRespDto video : videoList){
+            video.setLabelName(LabelEnum.getTypeNameByTypeId(video.getVideoLabel()));
+        }
         ModelAndView view = new ModelAndView("/main");
         view.addObject("photoList",photoList);
         view.addObject("videoList",videoList);
+        view.addObject("search","");
+        return view;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(String search,HttpServletRequest request){
+        UserRespDto user = (UserRespDto) request.getSession().getAttribute("user");
+        List<PhotoRespDto> photoList = photoService.searchPhotoListByUserId(user.getUserId(),search);
+        for (PhotoRespDto photo : photoList){
+            photo.setLabelName(LabelEnum.getTypeNameByTypeId(photo.getPhotoLabel()));
+        }
+        List<VideoRespDto> videoList = videoService.searchVideoListByUserId(user.getUserId(),search);
+        for (VideoRespDto video : videoList){
+            video.setLabelName(LabelEnum.getTypeNameByTypeId(video.getVideoLabel()));
+        }
+        ModelAndView view = new ModelAndView("/main");
+        view.addObject("photoList",photoList);
+        view.addObject("videoList",videoList);
+        view.addObject("search",search);
         return view;
     }
 
@@ -73,7 +99,7 @@ public class UserController extends BaseController{
         return ApiResponse.success(result);
     }
 
-    @PostMapping("/userRegister")
+    @GetMapping("/userRegister")
     public ModelAndView userRegister(){
         return new ModelAndView("/userRegister");
     }

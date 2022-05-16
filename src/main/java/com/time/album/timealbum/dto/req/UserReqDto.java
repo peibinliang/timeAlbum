@@ -1,8 +1,5 @@
 package com.time.album.timealbum.dto.req;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -68,4 +65,9 @@ public class UserReqDto implements Serializable {
      * 最后修改时间
      */
     private Date gmtModify;
+
+    /**
+     * 相册Id
+     */
+    private Integer albumId;
 }

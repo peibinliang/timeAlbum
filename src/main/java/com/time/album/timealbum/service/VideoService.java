@@ -47,4 +47,12 @@ public interface VideoService {
      * @return
      */
     boolean removeVideo(Integer videoId);
+
+    /**
+     * 搜索视频列表
+     * @param userId
+     * @param search
+     * @return
+     */
+    List<VideoRespDto> searchVideoListByUserId(Integer userId, String search);
 }

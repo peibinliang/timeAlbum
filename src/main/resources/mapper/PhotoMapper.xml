@@ -37,4 +37,21 @@
         where c.album_id = #{albumId}
           and a.is_deleted = 0
     </select>
+
+    <select id="searchPhotoListByUserId" resultType="com.time.album.timealbum.dto.resp.PhotoRespDto">
+        select a.*
+        from tb_photo a
+                 inner join tb_album_relation b
+                            on a.photo_id = b.photo_id
+                 inner join tb_album c
+                            on b.album_id = c.album_id
+                 inner join tb_user_relation d
+                            on c.album_id = d.album_id
+                 inner join tb_user e
+                            on d.user_id = e.user_id
+        where e.user_id = #{userId}
+          and (a.photo_label = cast(#{search} as signed)
+          or a.note like concat('%',#{search}))
+          and a.is_deleted = 0
+    </select>
 </mapper>

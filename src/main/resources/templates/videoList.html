@@ -1,0 +1,38 @@
+<html xml:xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>视频信息</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header>时光相册</header>
+<section class="flexModal fixedLeft">
+    <nav>
+        <ul>
+            <li>我的空间</li>
+            <li><a th:href="${'/album/albumList?userId='+session.user.getUserId()}">我的相册</a></li>
+            <li class="active">我的视频</li>
+            <li>空间成员</li>
+            <li><a th:href="${'/user/userInfo?userId='+session.user.getUserId()}">我的信息</a></li>
+        </ul>
+    </nav>
+    <article>
+        <h5>视频</h5>
+        <div th:each="item : ${videoList}" style="display: inline-block;">
+            <div style="width: 200px;height: 160px;border:1px solid #778899;display: inline-block;margin: 5px 0;">
+                <video width="200" controls>
+                    <source th:src="${item.videoUrl}" type="video/mp4">
+                    <source src="movie.ogg"  type="video/ogg">
+                </video>
+                <p style="font-size: 16px;line-height: 25px;margin: 0 auto;" th:text="${item.note}"></p>
+                <p style="font-size: 12px;line-height: 16px;color: grey;text-align: left;">标签:<span th:text="${item.labelName}"></span></p>
+            </div>
+        </div>
+    </article>
+</section>
+<footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
+</body>
+<script th:inline="javascript">
+</script>
+</html>

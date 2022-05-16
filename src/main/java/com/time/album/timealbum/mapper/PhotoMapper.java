@@ -36,4 +36,12 @@ public interface PhotoMapper extends BaseMapper<Photo> {
      * @return
      */
     Integer removePhoto(@Param("photo") Integer photoId);
+
+    /**
+     * 搜索照片列表
+     * @param userId
+     * @param search
+     * @return
+     */
+    List<PhotoRespDto> searchPhotoListByUserId(@Param("userId") Integer userId, @Param("search") String search);
 }

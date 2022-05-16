@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author 何巧莹
@@ -62,13 +61,13 @@ public class Photo extends Model<Photo> {
      * 创建时间
      */
     @TableField("gmt_create")
-    private Date gmtCreate;
+    private String gmtCreate;
 
     /**
      * 最后修改时间
      */
     @TableField("gmt_modify")
-    private Date gmtModify;
+    private String gmtModify;
 
     @Override
     protected Serializable pkVal() {

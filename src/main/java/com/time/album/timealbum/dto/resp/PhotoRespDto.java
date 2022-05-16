@@ -3,7 +3,6 @@ package com.time.album.timealbum.dto.resp;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author 何巧莹
@@ -54,10 +53,10 @@ public class PhotoRespDto implements Serializable {
     /**
      * 创建时间
      */
-    private Date gmtCreate;
+    private String gmtCreate;
 
     /**
      * 最后修改时间
      */
-    private Date gmtModify;
+    private String gmtModify;
 }

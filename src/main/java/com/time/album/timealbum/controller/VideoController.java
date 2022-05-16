@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 何巧莹
@@ -49,7 +50,7 @@ public class VideoController {
         return view;
     }
 
-    @PostMapping("/modifyVidoDo")
+    @PostMapping("/modifyVideoDo")
     public ApiResponse modifyVideoDo(VideoReqDto videoReqDto){
         videoReqDto.setGmtModify(new Date());
         videoService.modifyVideo(videoReqDto);
@@ -60,5 +61,16 @@ public class VideoController {
     public ApiResponse removeVideo(Integer videoId){
         videoService.removeVideo(videoId);
         return ApiResponse.success();
+    }
+
+    @GetMapping("/videoList")
+    public ModelAndView videoList(Integer userId){
+        List<VideoRespDto> videoList = videoService.listVideoByUserId(userId);
+        ModelAndView modelAndView = new ModelAndView("/videoList");
+        for (VideoRespDto video : videoList){
+            video.setLabelName(LabelEnum.getTypeNameByTypeId(video.getVideoLabel()));
+        }
+        modelAndView.addObject("videoList",videoList);
+        return modelAndView;
     }
 }

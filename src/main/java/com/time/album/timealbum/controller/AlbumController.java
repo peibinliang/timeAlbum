@@ -1,12 +1,16 @@
 package com.time.album.timealbum.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.time.album.timealbum.dto.req.AlbumReqDto;
+import com.time.album.timealbum.dto.req.UserReqDto;
 import com.time.album.timealbum.dto.resp.AlbumRespDto;
 import com.time.album.timealbum.dto.resp.PhotoRespDto;
 import com.time.album.timealbum.dto.resp.UserRespDto;
 import com.time.album.timealbum.dto.resp.VideoRespDto;
+import com.time.album.timealbum.model.ApiResponse;
 import com.time.album.timealbum.service.AlbumService;
 import com.time.album.timealbum.service.PhotoService;
+import com.time.album.timealbum.service.UserService;
 import com.time.album.timealbum.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +40,8 @@ public class AlbumController extends BaseController{
     private PhotoService photoService;
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/albumList")
     public ModelAndView albumList(Integer userId){
@@ -71,13 +77,40 @@ public class AlbumController extends BaseController{
         return view;
     }
 
+    @GetMapping("/addVideo")
+    public ModelAndView addVideo(Integer albumId){
+        ModelAndView view = new ModelAndView("/addVideo");
+        view.addObject("albumId",albumId);
+        return view;
+    }
+
     @GetMapping("/albumMember")
     public ModelAndView albumMember(Integer albumId){
         List<UserRespDto> userList = albumService.listUserByAlbumId(albumId);
+        AlbumRespDto album = albumService.getAlbumByAlbumId(albumId);
         ModelAndView view = new ModelAndView("/albumMember");
         view.addObject("userList",userList);
+        view.addObject("album",album);
+        return view;
+    }
+
+    @GetMapping("/addMember")
+    public ModelAndView addMember(Integer albumId){
+        ModelAndView view = new ModelAndView("/addMember");
         view.addObject("albumId",albumId);
         return view;
+    }
+
+    @PostMapping("/addMemberDo")
+    public ApiResponse addMemberDo(UserReqDto userReqDto){
+        boolean result = userService.addMember(userReqDto);
+        return ApiResponse.success(result);
+    }
+
+    @PostMapping("/removeMember")
+    public ApiResponse removeMember(AlbumReqDto albumReqDto){
+        boolean result = albumService.removeMember(albumReqDto.getAlbumId(), albumReqDto.getUserIdList());
+        return ApiResponse.success(result);
     }
 
     @RequestMapping("/savePhoto")

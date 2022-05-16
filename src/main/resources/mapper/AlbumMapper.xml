@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.time.album.timealbum.mapper.AlbumMapper">
+    <delete id="removeMember">
+        delete from tb_user_relation where album_id = #{albumId} and user_id in
+        <foreach collection="userIdList" item="userId" separator="," open="(" close=")">
+            #{userId}
+        </foreach>
+    </delete>
 
     <select id="lsitAlbum" resultType="com.time.album.timealbum.dto.resp.AlbumRespDto">
         select a.*

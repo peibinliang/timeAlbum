@@ -23,7 +23,11 @@
       <tr>
         <td>上传视频</td>
         <td>
-          <img id="video" src=""  style="width: 320px; height: 180px;display: block;"/>
+<!--          <video id="video" src=""  style="width: 320px; height: 180px;display: block;"/>-->
+          <video width="320" height="180" controls style="display: block;">
+            <source src="" type="video/mp4">
+            <source src="movie.ogg"  type="video/ogg">
+          </video>
           <span><input type="file" name="file" id="file" onchange="selectVideo(this);"></span>
         </td>
       </tr>
@@ -95,7 +99,7 @@
     $.ajax({
       type : "post",
       async : false,
-      url : "http://localhost:8088/album/savePhoto",
+      url : "http://localhost:8088/album/saveVideo",
       data : imgdata,
       cache : false,
       contentType : false, //不可缺
@@ -120,7 +124,7 @@
               alert("请选择标签");
               return;
             }
-            $.post("http://localhost:8088/photo/saveVideo",param,function (resp){
+            $.post("http://localhost:8088/video/saveVideo",param,function (resp){
               if (resp.code === "SUCCESS"){
                 alert("添加视频成功");
                 window.location = document.referrer;

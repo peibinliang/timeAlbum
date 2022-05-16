@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 何巧莹
@@ -50,5 +51,10 @@ public class AlbumReqDto implements Serializable {
      * 最后修改时间
      */
     private String gmt_modify;
+
+    /**
+     * 用户Id列表
+     */
+    private List<Integer> userIdList;
 
 }

@@ -20,8 +20,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("执行了拦截器的preHandle方法");
-        try {
-            HttpSession session = request.getSession();
+        try { HttpSession session = request.getSession();
             //统一拦截（查询当前session是否存在user）(这里user会在每次登录成功后，写入session)
             UserRespDto user = (UserRespDto) session.getAttribute("user");
             if (user != null) {

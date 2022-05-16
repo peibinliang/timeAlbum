@@ -40,4 +40,12 @@ public interface PhotoService {
      * @return
      */
     boolean removePhoto(Integer photoId);
+
+    /**
+     * 搜索照片列表
+     * @param userId
+     * @param search
+     * @return
+     */
+    List<PhotoRespDto> searchPhotoListByUserId(Integer userId, String search);
 }

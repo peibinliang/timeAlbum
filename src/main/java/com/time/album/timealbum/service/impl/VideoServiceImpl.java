@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.time.album.timealbum.dto.req.VideoReqDto;
 import com.time.album.timealbum.dto.resp.VideoRespDto;
 import com.time.album.timealbum.entity.Video;
+import com.time.album.timealbum.enums.LabelEnum;
 import com.time.album.timealbum.mapper.VideoMapper;
 import com.time.album.timealbum.service.VideoService;
 import com.time.album.timealbum.utils.Utils;
@@ -91,5 +92,20 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public boolean removeVideo(Integer videoId) {
         return videoMapper.removeVideo(videoId)>0;
+    }
+
+    /**
+     * 搜索视频列表
+     *
+     * @param userId
+     * @param search
+     * @return
+     */
+    @Override
+    public List<VideoRespDto> searchVideoListByUserId(Integer userId, String search) {
+        if (LabelEnum.getTypeIdByTypeName(search)!=null){
+            search = LabelEnum.getTypeIdByTypeName(search).toString();
+        }
+        return videoMapper.searchVideoListByUserId(userId,search);
     }
 }

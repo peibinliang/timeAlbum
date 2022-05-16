@@ -1,5 +1,6 @@
 package com.time.album.timealbum.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.time.album.timealbum.dto.resp.AlbumRespDto;
 import com.time.album.timealbum.dto.resp.UserRespDto;
 import com.time.album.timealbum.mapper.AlbumMapper;
@@ -40,5 +41,28 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<UserRespDto> listUserByAlbumId(Integer albumId) {
         return albumMapper.listUserByAlbumId(albumId);
+    }
+
+    /**
+     * 获取相册对象
+     *
+     * @param albumId
+     * @return
+     */
+    @Override
+    public AlbumRespDto getAlbumByAlbumId(Integer albumId) {
+        return BeanUtil.toBean(albumMapper.selectById(albumId),AlbumRespDto.class);
+    }
+
+    /**
+     * 移除相册成员
+     *
+     * @param albumId
+     * @param userIdList
+     * @return
+     */
+    @Override
+    public boolean removeMember(Integer albumId, List<Integer> userIdList) {
+        return albumMapper.removeMember(albumId,userIdList)>0;
     }
 }

@@ -33,4 +33,12 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     UserRespDto getUserByPhone(@Param("phone") String phone);
+
+    /**
+     * 新增用户关联关系
+     * @param albumId
+     * @param userId
+     * @return
+     */
+    Integer saveUserRelation(@Param("albumId") Integer albumId, @Param("userId") Integer userId);
 }

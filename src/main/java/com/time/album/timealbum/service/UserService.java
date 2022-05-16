@@ -39,4 +39,11 @@ public interface UserService {
      * @return
      */
     boolean modifyUser(UserReqDto userReqDto);
+
+    /**
+     * 新增相册成员
+     * @param userReqDto
+     * @return
+     */
+    boolean addMember(UserReqDto userReqDto);
 }

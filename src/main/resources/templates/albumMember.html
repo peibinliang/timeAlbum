@@ -46,8 +46,8 @@
       </div>
     </div>
     <br>
-    <button onclick="addMember()">新增成员</button>
-    <button onclick="removeMember()">移除成员</button>
+    <button onclick="addMember()" th:displayed="${session.user.userId != album.userId}">新增成员</button>
+    <button onclick="removeMember()" th:displayed="${session.user.userId != album.userId}">移除成员</button>
   </article>
 </section>
 <footer style="font-style: normal;font-weight: normal;font-size: 12px;">本系统由何巧莹个人开发维护</footer>
@@ -68,7 +68,14 @@
         param.userIdList.push(userId.val());
       }
     }
-    $.post("http://localhost:8088")
+    console.log(param);
+    $.post("http://localhost:8088/album/removeMember",param,function (resp){
+      if (resp.code === "SUCCESS"){
+        alert("移除成功");
+        window.location = document.referrer;
+        return;
+      }
+    })
   }
 </script>
 </html>

@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         UserRespDto user = userMapper.getUserByUserName(userReqDto.getUserName());
         if (Objects.isNull(user)){//用户不存在
             throw new BusinessException(UserStateCode.BU10002);
-        }else if (user.getPhone().equals(userReqDto.getPhone())){//手机号不正确
+        }else if (!user.getPhone().equals(userReqDto.getPhone())){//手机号不正确
             throw new BusinessException(UserStateCode.BU10004);
         }
         user.setPassword(userReqDto.getPassword());
@@ -108,5 +108,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean modifyUser(UserReqDto userReqDto) {
         return userMapper.updateById(BeanUtil.toBean(userReqDto,User.class))>0;
+    }
+
+    /**
+     * 新增相册成员
+     *
+     * @param userReqDto
+     * @return
+     */
+    @Override
+    public boolean addMember(UserReqDto userReqDto) {
+        User user = BeanUtil.toBean(userReqDto, User.class);
+        userMapper.insert(user);
+        userMapper.saveUserRelation(userReqDto.getAlbumId(),user.getUserId());
+        return false;
     }
 }

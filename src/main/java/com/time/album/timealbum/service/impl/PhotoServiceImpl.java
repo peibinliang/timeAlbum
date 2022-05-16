@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.time.album.timealbum.dto.req.PhotoReqDto;
 import com.time.album.timealbum.dto.resp.PhotoRespDto;
 import com.time.album.timealbum.entity.Photo;
+import com.time.album.timealbum.enums.LabelEnum;
 import com.time.album.timealbum.mapper.PhotoMapper;
 import com.time.album.timealbum.service.PhotoService;
 import com.time.album.timealbum.utils.Utils;
@@ -80,5 +81,20 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public boolean removePhoto(Integer photoId) {
         return photoMapper.removePhoto(photoId)>0;
+    }
+
+    /**
+     * 搜索照片列表
+     *
+     * @param userId
+     * @param search
+     * @return
+     */
+    @Override
+    public List<PhotoRespDto> searchPhotoListByUserId(Integer userId, String search) {
+        if (LabelEnum.getTypeIdByTypeName(search)!=null){
+            search = LabelEnum.getTypeIdByTypeName(search).toString();
+        }
+        return photoMapper.searchPhotoListByUserId(userId,search);
     }
 }
