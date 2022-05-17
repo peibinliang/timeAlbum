@@ -21,8 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
         //        向绝对路径 (D:\\Java学习\\springboot小滴\\springboot项目\\upload\\src\\main\\resources\\static\\images\\)映射
 
         String path="E:\\毕业设计\\时光相册\\timeAlbum\\src\\main\\resources\\static\\img";
-        registry.addResourceHandler("../image/**").addResourceLocations("file:"+path);
-
-
+        registry.addResourceHandler("/image/**").addResourceLocations("file:"+path);
     }
 }

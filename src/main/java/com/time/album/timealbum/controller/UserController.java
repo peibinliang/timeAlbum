@@ -47,22 +47,28 @@ public class UserController extends BaseController{
     @PostMapping("/userLogin")
     @ResponseBody
     public ApiResponse userLogin(UserReqDto userReqDto, HttpServletRequest request) throws BusinessException {
-        UserRespDto userRespDto = userService.userLogin(userReqDto);
+        UserRespDto userRespDto = userService.userLogin(userReqDto);//实现验证登录
         request.getSession().setAttribute("user",userRespDto);
         return ApiResponse.success(userRespDto);
     }
 
     @GetMapping("/main")
     public ModelAndView main(HttpServletRequest request){
+        //获取session里面的user对象
         UserRespDto user = (UserRespDto) request.getSession().getAttribute("user");
+        //通过用户Id获取照片列表
         List<PhotoRespDto> photoList = photoService.listPhotoByUserId(user.getUserId());
+        //遍历列表获取标签名称
         for (PhotoRespDto photo : photoList){
+            //通过标签值获取标签名称
             photo.setLabelName(LabelEnum.getTypeNameByTypeId(photo.getPhotoLabel()));
         }
+        //通过用户Id获取视频列表
         List<VideoRespDto> videoList = videoService.listVideoByUserId(user.getUserId());
         for (VideoRespDto video : videoList){
             video.setLabelName(LabelEnum.getTypeNameByTypeId(video.getVideoLabel()));
         }
+        //创建视图，设置视图地址
         ModelAndView view = new ModelAndView("/main");
         view.addObject("photoList",photoList);
         view.addObject("videoList",videoList);
@@ -81,6 +87,7 @@ public class UserController extends BaseController{
         for (VideoRespDto video : videoList){
             video.setLabelName(LabelEnum.getTypeNameByTypeId(video.getVideoLabel()));
         }
+        //创建视图，设置视图地址
         ModelAndView view = new ModelAndView("/main");
         view.addObject("photoList",photoList);
         view.addObject("videoList",videoList);
@@ -139,6 +146,7 @@ public class UserController extends BaseController{
     @PostMapping("/modifyUserDo")
     @ResponseBody
     public ApiResponse modifyUserDo(UserReqDto userReqDto){
+        //更新成功返回boolean类型
         boolean result = userService.modifyUser(userReqDto);
         return ApiResponse.success(result);
     }

@@ -121,12 +121,12 @@
       param.realName = param.realName.trim()
     }
 
-    console.log(param)
+    // console.log(param)
 
     $.post("http://localhost:8088/user/modifyUserDo",param,function (resp){
       if (resp.code === "SUCCESS"){
         alert("修改成功");
-        window.location = document.referrer;
+        window.location = document.referrer;//返回上一页并刷新
         return;
       }else {
         alert(resp.message);

@@ -29,6 +29,7 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public List<AlbumRespDto> listAlbum(Integer userId) {
+        //根据用户ID返回相册列表
         return albumMapper.lsitAlbum(userId);
     }
 

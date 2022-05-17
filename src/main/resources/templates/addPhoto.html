@@ -75,6 +75,7 @@
     }
     imgdata = new FormData();
     $.each($(obj)[0].files,function(i,file){
+      //把照片数据赋给imgdata对象
       imgdata.append('file', file);
     });
     if(!file.files || !file.files[0]){
@@ -82,6 +83,7 @@
     }
     //将上传的图片显示到页面
     var reader = new FileReader();
+    //为相片框加载上传的照片
     reader.onload = function(evt){
       $("#image").show();
       document.getElementById('image').src = evt.target.result;

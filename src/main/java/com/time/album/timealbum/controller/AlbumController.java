@@ -45,7 +45,9 @@ public class AlbumController extends BaseController{
 
     @GetMapping("/albumList")
     public ModelAndView albumList(Integer userId){
+        //根据UserID来返回相册列表
         List<AlbumRespDto> albumList = albumService.listAlbum(userId);
+        //创建视图
         ModelAndView view = new ModelAndView("/albumList");
         view.addObject("albumList",albumList);
         return view;
@@ -87,9 +89,12 @@ public class AlbumController extends BaseController{
     @GetMapping("/albumMember")
     public ModelAndView albumMember(Integer albumId){
         List<UserRespDto> userList = albumService.listUserByAlbumId(albumId);
+        //根据相册Id获取相册对象
         AlbumRespDto album = albumService.getAlbumByAlbumId(albumId);
+        //创建新的视图
         ModelAndView view = new ModelAndView("/albumMember");
         view.addObject("userList",userList);
+        //给视图添加对象
         view.addObject("album",album);
         return view;
     }
@@ -109,6 +114,7 @@ public class AlbumController extends BaseController{
 
     @PostMapping("/removeMember")
     public ApiResponse removeMember(AlbumReqDto albumReqDto){
+        //根据相册ID和用户Id的列表批量移除成员
         boolean result = albumService.removeMember(albumReqDto.getAlbumId(), albumReqDto.getUserIdList());
         return ApiResponse.success(result);
     }

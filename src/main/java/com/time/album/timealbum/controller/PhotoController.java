@@ -26,6 +26,7 @@ public class PhotoController {
 
     @PostMapping("/savePhoto")
     public ApiResponse savePhoto(PhotoReqDto photoReqDto){
+        //把照片信息保存到数据库
         boolean result = photoService.savePhoto(photoReqDto);
         return ApiResponse.success(result);
     }
@@ -33,6 +34,7 @@ public class PhotoController {
     @GetMapping("/photoInfo")
     public ModelAndView photoInfo(Integer photoId){
         ModelAndView view = new ModelAndView("/photoInfo");
+        //根据照片ID获取照片信息
         PhotoRespDto photo = photoService.getPhotoByPhotoId(photoId);
         photo.setLabelName(LabelEnum.getTypeNameByTypeId(photo.getPhotoLabel()));
         view.addObject("photo",photo);

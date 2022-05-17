@@ -63,13 +63,14 @@
       'userIdList':[],
       'albumId':[[${albumId}]]
     }
+    //获取所有复选框，判断复选框是否选中
     let userIds = document.getElementsByName("userId");
     for(let userId in userIds){
       if (userId.checked){
         param.userIdList.push(userId.val());
       }
     }
-    console.log(param);
+    // console.log(param);
     $.post("http://localhost:8088/album/removeMember",param,function (resp){
       if (resp.code === "SUCCESS"){
         alert("移除成功");

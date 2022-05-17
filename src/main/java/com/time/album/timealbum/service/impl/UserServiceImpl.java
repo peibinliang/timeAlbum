@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserRespDto userLogin(UserReqDto userReqDto) throws BusinessException {
+        //通过账号获取用户
         UserRespDto userRespDto = userMapper.getUserByAccount(userReqDto.getAccount());
         if(Objects.isNull(userRespDto)){
             throw new BusinessException(UserStateCode.BU10002);
@@ -107,6 +108,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean modifyUser(UserReqDto userReqDto) {
+        //根据用户ID更新用户信息
         return userMapper.updateById(BeanUtil.toBean(userReqDto,User.class))>0;
     }
 
