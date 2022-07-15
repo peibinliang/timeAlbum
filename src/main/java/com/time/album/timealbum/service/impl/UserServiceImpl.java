@@ -120,6 +120,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean addMember(UserReqDto userReqDto) {
+        //对象类型转换
         User user = BeanUtil.toBean(userReqDto, User.class);
         userMapper.insert(user);
         userMapper.saveUserRelation(userReqDto.getAlbumId(),user.getUserId());

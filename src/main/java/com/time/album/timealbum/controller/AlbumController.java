@@ -88,6 +88,7 @@ public class AlbumController extends BaseController{
 
     @GetMapping("/albumMember")
     public ModelAndView albumMember(Integer albumId){
+        //根据相册ID获取它的成员
         List<UserRespDto> userList = albumService.listUserByAlbumId(albumId);
         //根据相册Id获取相册对象
         AlbumRespDto album = albumService.getAlbumByAlbumId(albumId);
@@ -130,7 +131,7 @@ public class AlbumController extends BaseController{
             //文件存储位置
             ServletContext scontext = request.getSession().getServletContext();
             // 获取绝对路径
-            String path = "E:\\毕业设计\\时光相册\\timeAlbum\\src\\main\\resources\\static\\img";
+            String path = "D:\\personal\\study\\timeAlbum\\src\\main\\resources\\static\\img";
             String lastname = fileName.substring(fileName.lastIndexOf("."), fileName.length());//文件后缀
             fileName = new Date().getTime() + "_" + new Random().nextInt(1000) + lastname;//当前时间+随机数=新的文件名
             // 如果文件夹不存在则创建
@@ -166,7 +167,7 @@ public class AlbumController extends BaseController{
             //文件存储位置
             ServletContext scontext = request.getSession().getServletContext();
             // 获取绝对路径
-            String path = "E:\\毕业设计\\时光相册\\timeAlbum\\src\\main\\resources\\static\\video";
+            String path = "D:\\personal\\study\\timeAlbum\\src\\main\\resources\\static\\img";
             String lastname = fileName.substring(fileName.lastIndexOf("."), fileName.length());//文件后缀
             fileName = new Date().getTime() + "_" + new Random().nextInt(1000) + lastname;//当前时间+随机数=新的文件名
             // 如果文件夹不存在则创建
